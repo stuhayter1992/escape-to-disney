@@ -1,0 +1,630 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Guest Book</title>
+<style type="text/css">
+<!--
+body {
+	margin: 0;
+	padding: 0;
+	color: #039;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 92%;
+	line-height: 1.4;
+}
+
+/* ~~ Element/tag selectors ~~ */
+ul, ol, dl { /* Due to variations between browsers, it's best practices to zero padding and margin on lists. For consistency, you can either specify the amounts you want here, or on the list items (LI, DT, DD) they contain. Remember that what you do here will cascade to the .nav list unless you write a more specific selector. */
+	padding: 0;
+	margin: 0;
+}
+h1, h2, h3, h4, h5, h6, p {
+	margin-top: 0;	 /* removing the top margin gets around an issue where margins can escape from their containing div. The remaining bottom margin will hold it away from any elements that follow. */
+	padding-right: 15px;
+	padding-left: 15px; /* adding the padding to the sides of the elements within the divs, instead of the divs themselves, gets rid of any box model math. A nested div with side padding can also be used as an alternate method. */
+}
+a img { /* this selector removes the default blue border displayed in some browsers around an image when it is surrounded by a link */
+	border: none;
+}
+
+/* ~~ Styling for your site's links must remain in this order - including the group of selectors that create the hover effect. ~~ */
+a:link {
+	color: #42413C;
+	text-decoration: underline; /* unless you style your links to look extremely unique, it's best to provide underlines for quick visual identification */
+}
+a:visited {
+	color: #6E6C64;
+	text-decoration: underline;
+}
+a:hover, a:active, a:focus { /* this group of selectors will give a keyboard navigator the same hover experience as the person using a mouse. */
+	text-decoration: none;
+}
+
+/* ~~ This fixed width container surrounds all other divs ~~ */
+.container {
+	width: 960px;
+	margin: 0 auto; /* the auto value on the sides, coupled with the width, centers the layout */
+	background-color: #FFFFFF;
+}
+
+/* ~~ The header is not given a width. It will extend the full width of your layout. It contains an image placeholder that should be replaced with your own linked logo. ~~ */
+.header {
+}
+
+/* ~~ These are the columns for the layout. ~~ 
+
+1) Padding is only placed on the top and/or bottom of the divs. The elements within these divs have padding on their sides. This saves you from any "box model math". Keep in mind, if you add any side padding or border to the div itself, it will be added to the width you define to create the *total* width. You may also choose to remove the padding on the element in the div and place a second div within it with no width and the padding necessary for your design.
+
+2) No margin has been given to the columns since they are all floated. If you must add margin, avoid placing it on the side you're floating toward (for example: a right margin on a div set to float right). Many times, padding can be used instead. For divs where this rule must be broken, you should add a "display:inline" declaration to the div's rule to tame a bug where some versions of Internet Explorer double the margin.
+
+3) Since classes can be used multiple times in a document (and an element can also have multiple classes applied), the columns have been assigned class names instead of IDs. For example, two sidebar divs could be stacked if necessary. These can very easily be changed to IDs if that's your preference, as long as you'll only be using them once per document.
+
+4) If you prefer your nav on the right instead of the left, simply float these columns the opposite direction (all right instead of all left) and they'll render in reverse order. There's no need to move the divs around in the HTML source.
+
+*/
+.sidebar1 {
+	float: left;
+	width: 180px;
+	padding-bottom: 10px;
+	background-color: #FFF;
+}
+.content {
+	padding: 10px 0;
+	width: 600px;
+	float: left;
+	background-color: #FFF;
+}
+.sidebar2 {
+	float: left;
+	width: 180px;
+	padding: 10px 0;
+	background-color: #FFFFFF;
+}
+
+/* ~~ This grouped selector gives the lists in the .content area space ~~ */
+.content ul, .content ol { 
+	padding: 0 15px 15px 40px; /* this padding mirrors the right padding in the headings and paragraph rule above. Padding was placed on the bottom for space between other elements on the lists and on the left to create the indention. These may be adjusted as you wish. */
+}
+
+/* ~~ The navigation list styles (can be removed if you choose to use a premade flyout menu like Spry) ~~ */
+ul.nav {
+	list-style: none; /* this removes the list marker */
+	border-top: 1px solid #666; /* this creates the top border for the links - all others are placed using a bottom border on the LI */
+	margin-bottom: 15px; /* this creates the space between the navigation on the content below */
+}
+ul.nav li {
+	border-bottom: 1px solid #666; /* this creates the button separation */
+}
+ul.nav a, ul.nav a:visited { /* grouping these selectors makes sure that your links retain their button look even after being visited */
+	padding: 5px 5px 5px 15px;
+	display: block; /* this gives the anchor block properties so it fills out the whole LI that contains it so that the entire area reacts to a mouse click. */
+	width: 160px;  /*this width makes the entire button clickable for IE6. If you don't need to support IE6, it can be removed. Calculate the proper width by subtracting the padding on this link from the width of your sidebar container. */
+	text-decoration: none;
+	background: #C6D580;
+}
+ul.nav a:hover, ul.nav a:active, ul.nav a:focus { /* this changes the background and text color for both mouse and keyboard navigators */
+	background: #ADB96E;
+	color: #FFF;
+}
+
+/* ~~ The footer styles ~~ */
+.footer {
+	padding: 10px 0;
+	width: 600px;
+	float: left;
+	background-color: #FFF;
+	bottom: 1px;
+}
+
+/* ~~ Miscellaneous float/clear classes ~~ */
+.fltrt {  /* this class can be used to float an element right in your page. The floated element must precede the element it should be next to on the page. */
+	float: right;
+	margin-left: 8px;
+}
+.fltlft { /* this class can be used to float an element left in your page. The floated element must precede the element it should be next to on the page. */
+	float: left;
+	margin-right: 8px;
+}
+.clearfloat { /* this class can be placed on a <br /> or empty div as the final element following the last floated div (within the .container) if the .footer is removed or taken out of the .container */
+	clear:both;
+	height:0;
+	font-size: 1px;
+	line-height: 0px;
+}
+-->
+</style>
+<script type="text/javascript">
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+</script>
+</head>
+
+<body onload="MM_preloadImages('Images/Home-button-clicked.png','Images/Villa-Details-Button-Clicked.png','Images/Location-Button-Clicked.png','Images/Rates-Button-Clicked.png','Images/Guestbook-Button-Clicked.png')">
+<div class="container">
+  <div class="header"><!-- end .header --><img src="C:\Users\shayter\Documents\E2D\Guest-book.png" width="960" height="200" border="0" usemap="#Map">
+    <map name="Map" id="Map">
+      <area shape="rect" coords="625,151,833,179" href="mailto:pjw15@btinternet.com?subject=Escape To Disney villa enquiry">
+    </map>
+  </div>
+  <div class="sidebar2"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image2','','C:\Users\shayter\Documents\E2D\Home-button-clicked.png',1)"><img src="http://escapetodisney.co.uk/Images/Home-button.png" name="Image2" width="180" height="60" border="0" usemap="#Image2Map" id="Image2">
+      <map name="Image2Map" id="Image2Map">
+        <area shape="rect" coords="1,0,178,82" href="http://escapetodisney.co.uk/index.html">
+      </map>
+  </a><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image3','','Images/Villa-Details-Button-Clicked.png',1)"><img src="http://escapetodisney.co.uk/Images/Villa-Details-Button.png" name="Image3" width="180" height="60" border="0" usemap="#Image3Map" id="Image3">
+  <map name="Image3Map" id="Image3Map">
+    <area shape="rect" coords="2,2,182,76" href="http://escapetodisney.co.uk/Villa%20Details.html">
+  </map>
+  </a><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image4','','Images/Location-Button-Clicked.png',1)"><img src="http://escapetodisney.co.uk/Images/Location-button.png" name="Image4" width="180" height="60" border="0" usemap="#Image4Map" id="Image4">
+  <map name="Image4Map" id="Image4Map">
+    <area shape="rect" coords="0,1,180,93" href="http://escapetodisney.co.uk/Location.html">
+  </map>
+  </a><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image5','','Images/Rates-Button-Clicked.png',1)"><img src="http://escapetodisney.co.uk/Images/Rates-button.png" name="Image5" width="180" height="60" border="0" usemap="#Image5Map" id="Image5">
+  <map name="Image5Map" id="Image5Map">
+    <area shape="rect" coords="-3,0,181,86" href="http://escapetodisney.co.uk/Rates.html">
+  </map>
+  </a><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image6','','Images/Guestbook-Button-Clicked.png',1)"><img src="http://escapetodisney.co.uk/Images/Guestbook-button.png" name="Image6" width="180" height="60" border="0" usemap="#Image6Map" id="Image6">
+  <map name="Image6Map" id="Image6Map">
+    <area shape="rect" coords="1,2,230,90" href="Guest Book.html">
+  </map>
+
+  </a></div>
+  <div class="content">
+    <div align="center">
+      <p>&nbsp;</p>
+      <table width="567" border="0">
+        <tbody><tr>
+          <td><div align="center"><strong>29th October to 15th November 2016</strong></div></td>
+        </tr>
+        <tr>
+          <td>We had a great holiday and the villa was perfect. The weather was mid-eighties on our first week and then cooled to mid-seventies, still warm enough to use the pool. Thanks again for making it an easy experience.<br>
+          <strong>Monk, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong>7th to 27th October 2016</strong></div></td>
+        </tr>
+        <tr>
+          <td>We had a wonderful holiday and the villa was excellent and had everything you could want.<br>
+            We would not hesitate to come back to the villa and we are already giving the information to one of my wife's friends and would not hesitate to recommend your villa to any of our friends or relatives.<br>
+            We thank you for your help in the booking of the villa and directions.<br>
+          <strong>Jacobs, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong>17th August to 1st September 2016</strong></div></td>
+        </tr>
+        <tr>
+          <td>The villa was lovely and the boys loved the pool, our room was great with the biggest bathroom ever. It is&nbsp;in an ideal location and lovely and quiet ( which I appreciated ).<br>
+            We would not hesitate to return&nbsp;<br>
+          <strong>Walton, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong>5th to 19th July 2016</strong></div></td>
+        </tr>
+        <tr>
+          <td>We all had a great time, location of the villa was excellent. Accommodation fantastic. We would recommend the use of your villa to friends and family. Thanks<br>
+          <strong>Ferry, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong>21st June to 5th July 2016</strong></div></td>
+        </tr>
+        <tr>
+          <td>Just a short email to thank you for the use of your wonderful villa for the past 2 weeks. We all had a great time and the location was perfect. Thanks again and we will recommend your villa to anyone who is heading for Orlando.<br>
+          <strong>Gray, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong>13th to 20th May 2016</strong></div></td>
+        </tr>
+        <tr>
+          <td>Just wanted to say a huge thank you for your lovely villa. &nbsp;It was simply a joy to return there especially after a week in just one hotel room - i was so excited by all of the space!<br>
+            The villa itself was very clean and had everything we needed and I would certainly recommend it to others.<br>
+          <strong>Taylor, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong>30th April to 12th May 2016</strong></div></td>
+        </tr>
+        <tr>
+          <td>Our second stay at the villa and hoping there will be a third. It was the perfect place to be. Our three grandsons enjoyed the pool on a daily basis. The days we didn’t go to the parks, they were perfectly happy to be just here. Thank you Jacqui and Paul for being the nicest people to deal with. You both make accommodation planning so easy.<br>
+          <strong>Zimmerman, Canada</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong>22nd March to 5th April 2016</strong></div></td>
+        </tr>
+        <tr>
+          <td>We all enjoyed our visit to Orlando. Thank you for letting us use your lovely villa. We all loved jumping in the pool for a few hours and visiting the parks. We hope to be back soon. Your villa is so well situated for the Disney Parks, and even the longer drives to Universal, Sea World and Discovery Cove didn't take too long at all. The villa is in such a nice location and we've already all said we'd very much like to come back for another holiday. Thank you very much for everything.<br>
+          <strong>Lloyd UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong>13th to the 19th March 2016</strong></div></td>
+        </tr>
+        <tr>
+          <td>The villa was great!&nbsp; Our kids loved the pool and there was a lot of space for all of us.&nbsp; We had amazing weather also which made for a great holiday! We will be sure to let others know of your place if they are looking for a holiday in Florida.<br>
+          <strong>Takacs, USA</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong>5th to the 12th March 2016</strong></div></td>
+        </tr>
+        <tr>
+          <td>We were very pleased with the villa.&nbsp; The rooms were very clean and well laid out.&nbsp; The pool was enjoyed by all.&nbsp; The location is great for visiting all the Disney parks - which we did! Thank you again for sharing your home with our family.<br>
+          <strong>Chuck Lorentz, USA</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong>15th February to the 4th March 2016</strong></div></td>
+        </tr>
+        <tr>
+          <td>After ten days of hectic schedules we have finally paused to relax and enjoy the villa (It is raining today). I want to thank you both for sharing your home with us. The villa has really enhanced our vacation. There is plenty of room for the family to dine and play together, and the babies can be rest without being bothered. My seven year old grandson starts each morning with a Foosball game. We visit the neighbourhood park nearly every day to use the basketball court, tennis court or playground. I would be remiss if I didn't mention the pool. It is the center of attraction for the children. Our two granddaughters (8 yrs. and 10 yrs.) just arrived yesterday as we rotated families. They swim competitively and are thrilled to have their own pool.&nbsp;Our first impression of the villa was the pleasant neighbourhood and &nbsp;neatly landscaped lawn. When we first came in, the open floor plan really impressed us. It only got better as we explored the home. We found all the rooms to be clean, comfortable and accommodating. The HVAC keeps the home comfortable. The home is quiet. You hear very little road noise (or neighbours). &nbsp;The extra amenities such as coolers, two sets of dishes, towels, washer and dryer,&nbsp;strollers, pack-and-plays, kitchen utensils, nightlights, etc. are wonderful. The location is great for the Disney parks. All the parks are less than 15 minutes from the villa.Dave and Louise have been great to work with. We had a smoke alarm beeping and within a few hours they had the battery changed. As I write this note, the pool staff are here cleaning the pool and the patio. I don't know what has been better Disney, the villa or the weather? I do know we are looking to our last week of vacation and future visits.<br>
+          <strong>Jeff Lorentz, USA</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>28th December 2015 to 4th January 2016</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>We loved our stay in your Villa, which was so homely and well laid out. The location was brilliant. We have been holidaying in the Orlando area for the past 25 years , but normally only visit every other year. Out of every Villa we have ever rented this is in the top 4. We will keep your details for the future. Thank you again for a lovely week of a three week holiday.<br>
+          <strong>Gillespie, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>26th October to 9th November 2015</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>We all have the holiday blues unfortunately. We really enjoyed our holiday thank you and your villa was the perfect place to stay. We will be looking to go again in 2017 so if it's ok I will contact you next year to check your availability.<br>
+          <strong>Williams, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>12th to 26th October 2015</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>The villa was fabulous, great location too.<br>
+            I would like to think we will visit again even though my husband is theme parked out, but I will never get tired of Disney. So hopefully 2 years and we'll be back (to your villa) if I don't move there first.<br>
+          <strong>Preston UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>24th September to 8th October 2015</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>We had a fantastic holiday thank you. The villa was lovely just in the area we wanted it to be and we liked that the pool area was so secluded. We have visited Florida many times and the standard of your villa was very good in comparison to some of the others. The room sizes and layout of the villa were very good. The management company were good as there were a couple of issues that they came to resolve straight away. This was to replace a battery in the air conditioning unit and to fix the motor for the outdoor fan. I am sure that we will contact you in the future when we are looking to book further holidays to Florida. we really did enjoy staying in your villa we love that area, we rented a four bed roomed villa on rolling hills a couple of years ago the villa didn't compare at all to yours, so if we get the chance we will be contacting you again in the future, many thanks once again.<br>
+          <strong>Hough, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>10th to 18th September 2015</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>Yes we had a wonderful time at the villa thank you, a lovely house and we were really pleased with the location.<br>
+          <strong>Kremer, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>29th August to 8th September 2015</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>We all had a fantastic time in Kissimmee and at your lovely villa. Convenient for parks and shopping and enjoyed eating in Millers Ale House just along the road. Ran out of time for some of the places we wanted to visit so must come back! Thank you for letting us use your lovely home.<br>
+          <strong>Morley, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>15th to 29th August 2015</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>We have had a great time in this lovely villa. Really comfortable and convenient for all the parks, shops, etc. Kids really enjoyed the pool and have already asked when we can come back! Thanks for a great holiday, hope we will return again one day soon.<br>
+          <strong>Larkman, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>24th July to 15th August 2015</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>Hi! -- I was just contacting to say a big "Thank You" for the use of your lovely Orlando Villa. We have just got back after a wonderful holiday. We have stayed in a number of Villas in the past and in sincerity - we enjoyed your villa by far! It was the best we have ever stayed in and we really felt at home. We are sincerely grateful to you. If you are happy for me to do so -- a couple of my teachers at my school are talking about going to Orlando and I could pass on your villa details?<br>
+          <strong>Dickinson, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>9th to 24th July 2015</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>First I couldn’t say enough good about your beautiful villa, it was the making of a wonderful holiday, just to return to such comfort and cleanliness. I am known to be a clean freak and the villa was spotless. Should we ever return I would want to stay in your villa, and I hope we do someday again. We had never been to America before and it was wonderful to have the girls with us to see it together as it could well be our last holiday together as they are grown up now. We all enjoyed the pool area and some mornings the girls went off on their own and Wesley and  I enjoyed the solitude of the pool. We were also lucky with the weather as we only got rain twice when we were out, and I am tanner than I thought I would be. W e fitted so much in, we saw all the parks in Disney &amp; Universal, the Harry Potter areas and the train was unbelievable and there is nothing like a good frozen butter beer!! We also visited Miami and the Keys right out to Key West, Miami being my favourite. The Keys were disappointing but glad we went. We also travelled up to Clearwater. We also visited the Malls and outlets. I can’t believe we did so much. All went so smoothly with the<br>
+travel and car hire. So Jacqui best holiday ever and thank you for the use of the best decorated best atmosphere and beautiful villa. We looked at so many online before we saw yours and we knew immediately it was the one for us, the decor is so me. I am such a fan of bright and happy. <br>
+<strong>McBride, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>25th June to 9th July 2015</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>Thank you for letting us use your villa. As a property, the layout is excellent and the location was absolutely perfect. You have a lovely home and we hope that we'll be able to stay again in the future.<br>
+          <strong>Coyle, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>7th to 14th June 2015</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>Awesome!<br>
+          <strong>Ramirez, USA</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>11th to 27th May 2015</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>We have had truly the most amazing time here. There is so much to do, boredom is a distant memory. The location is brill. We packed in every day Disney, Universal, Busch, you name it, we went there. The villa was excellent for our needs, even when we had a couple of hours R and R. Great size and very convenient. Many thanks.<br>
+          <strong>Parr, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>28th March to 12th April 2015</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>Departure day! What a great holiday and a great villa, we will miss it very much. We all had fun times here. Thank you.<br>
+          <strong>Russell, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>28th February to 28th March 2015</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>We did enjoy the great weather and spent lots of time in the pool. We are definitely going home several shades darker than when we arrived! &nbsp;We felt very much at home. The neighbourhood is quiet and we had some wonderful walks around the area. &nbsp; Your managers David and Louise were terrific. Always on hand for an thing we needed help with... Good holiday all around .... We will certainly keep your place in mind if we head to Orlando in the future.<br>
+          <strong>McManus, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>6th to 14th January 2015</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>We had a fantastic vacation! We enjoyed our stay at your villa. It was very clean and had everything we needed. Thank you<br>
+          <em><strong>Kehoe, USA</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>29th December to the 4th January 2015</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>Everything was perfect in the villa, and exactly like the description on your website. We very much enjoyed the holiday there. I would like to book it in the future again and recommend my friends go there.<br>
+          <em><strong>Zhang, USA</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>3rd to 17th October 2014</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>Thank you for sharing your lovely villa with us for two weeks. The villa was excellent and provided everything we needed. It definitely is an ideal location. Thank you again. Hopefully we will be back soon.<br>
+          <em><strong>Tyler, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>24th July to 9th August 2014</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>Just a email to say thank you for renting us your villa on Indian Creek.&nbsp; It was only when we were sat on the plane to return home that I realised I hadn't written anything in the guest book - sorry! The villa was lovely and had everything we needed. We have stayed on Indian Creek before so knew it was ideally located for the parks. <br>
+            We all had a relaxing holiday (well as much as you can in Orlando!) &amp; enjoyed the all day sunshine by the pool. <br>
+          Thank you again &amp; we will certainly check your availability next time we are planning a trip.<br>
+          <strong><em>Collins, UK </em></strong><br></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>12th to 30th June 2014</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>We were very happy at your beautiful and comfortable house and we are waiting for a second stay soon.<br>
+          <em><strong>Reed, Brazil</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>27th May to 10th June 2014 </strong></u></div></td>
+        </tr>
+        <tr>
+          <td>We had an amazing time staying in your villa. Location was excellent. Villa had everything we needed. We will definitely be back. Many thanks.<br>
+          <em><strong>Johnston, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>19th April to 10th May 2014</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>We’ve had an amazing holiday. We write this with a heavy heart as we don’t want to leave even after 3 weeks. This villa feels like our American home and has been a pleasure living in. Where do we start – loads to do and see here. Obviously the characters and rides have been amazing. Wishes is a must and Fantasmic at Hollywood Studios, Manta at Seaworld was fab! We’ve loved going to Ponderosa every morning to fill our boots for the day ahead. In the evening there is loads to choose from but our favourite and a must visit is Texas Roadhouse, amazing food with a brilliant atmosphere. Thanks again, can’t wait to return.<br>
+          <em><strong>Credland, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>5th to 19th April 2014</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>We have all enjoyed the two weeks spent here at your villa. Disney parks are a favourite with our family. Lots of places to visit, Kennedy Space Centre was excellent. Nearby restaurants get busy to get there early or make a reservation. Red Lobster and Outback were our favourites. Many thanks<br>
+          <em><strong>Read, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>29th March to 5th April 2014</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>We had a great time staying here! We stayed the whole week and went to all of the Disney parks. This villa is only about 20 minutes away so it made for a quick drive back and forth. The neighbourhood is nice and quiet and the management was very helpful and gave good advice about what beaches to visit. The house is beautiful and spotless when we arrived and the pool was great. We all had a blast playing in it. Thank you so much for allowing us to stay here. You were more than accommodating. Many thanks.<br>
+          <em><strong>Warfield, USA</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>22nd to 26th March 2014</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>I would like to say thank you so much. &nbsp;We enjoyed ourselves and love your home and we will definitely use you in the future. &nbsp;I also shared your webpage on my facebook page as well. &nbsp;Thank you again and have a wonderful day! <br>
+          <em><strong>Jones, USA</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>6th to 15th March 2014</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>We had an absolute wonderful time! Your villa is fabulous!  No problems love your villa and hope to come back again.<br>
+          <em><strong>Boehm. USA</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>17th December to 5th January 2014</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>You have a beautiful villa and we really enjoyed our time there. The villa was a joy to stay in and made our holiday so comfortable. We would highly recommend it and look forward to staying again in the future. Once again thanks for all your help and assistance in make it a memorable holiday.<br>
+          <strong><em>Sempey, UK</em></strong><em></em></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>23rd to 30th November 2013</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>Thanks again for sharing your beautiful house with us. We had a wonderful time. I’m sure we will rent from you again in the future.<br>
+          <em><strong>Blasingame, USA</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>27th October to 4th November 2013</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>Just wanted to thank you for allowing us to stay in your villa. We found it amazing, even better than expected. The location was superb. Everybody in our party enjoyed the stay. When we go back to Orlando we will gladly stay there again.<br>
+          <em><strong>Masake, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>6th to 25th October 2013</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>Lovely villa, fantastic location, great holiday. Pity it has to end. Thanks to Paul and Jacqui and the cleaner as the villa was spotless.<br>
+          <em><strong>Anderson, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>11th to 20th September 2013</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>We had a fantastic holiday thank you! The villa was very good as was it the last time we visited. The villa definitely met our expectations. We hope to visit again in the not too distant future as we love the Outback steaks.<br>
+          <em><strong>Gibbs, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>20th August to 1st September 2013</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>Lovely, clean and well equipped and spacious villa. Amazing location, so close to all the parks and some good restaurants – Outback a favourite – great steaks and ribs. Fantastic holiday. We hope to “Escape to Disney” again very soon.<br>
+          <em><strong>Wills, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>2nd to 16th August 2013</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>We are saying a very sad goodbye today to what has been an amazing holiday, made even better by staying in your well equipped, clean and spacious villa in its perfect location. Close to the Disney parks, restaurants (Outback and Red Lobster have superb food) and the supermarket has made getting around very easy. Our girls have enjoyed spending time in the pool and the games room. We will definitely be returning one day.<br>
+          <em><strong>Tonkinson, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>19th July to 2nd August 2013</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>Villa was great, fantastic location for Disney. Felt as if 2 weeks were not enough as had 14 days of parks and not enough chill out time at villa. Had such a good time. Will start to get prices for next year. Thanks for the use of your holiday home.<br>
+          <em><strong>McAloon, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>16th to 30th June 2013</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>The villa was great, everything we needed (and more in toys) The location was fantastic too. We would definitely like to return to Indian Creek and this villa in the future. Would recommend to friends.<br>
+          <em><strong>Oglivie, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td width="557"><div align="center"><strong><u>8th to 15th June 2013</u></strong></div></td>
+        </tr>
+        <tr>
+          <td><div align="left">The house was beautiful-Just like the pictures.&nbsp; We had a fantastic time and my grandkids lived in the pool--It was so nice of you to share your home with our family--We loved it and I have given your email to some friends at work for next year! Thanks so much<br>
+              <em><strong>McCrory, USA</strong></em></div></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>24th May to 7th June 2013</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>We had a great holiday and your villa really made it for us. Everything you said would be available in the villa was and the BBQ you arranged for us also worked out great. &nbsp;The location is perfect for Disney and Orlando and we took full advantage as we were able to come home for lunch and an afternoon cool down in the pool. &nbsp;The villa is maintained to very high standard and we would certainly recommend it to all our friends. Hopefully we will be able to visit again in near future.Thanks again for all your help.<br>
+          <strong><em>Towse, UK</em></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>10th to 24th May 2013</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>We all had a fantastic time and your villa was lovely.<br>
+            The location of your villa was ideal and very close to everything we needed and when we arrived your villa was clean and tidy as expected.<br>
+          Thank you again for sharing your villa with us.<br>          <em><strong>Tyler, UK</strong></em></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>&nbsp;31st March to 14th April 2013</u></strong></div></td>
+        </tr>
+        <tr>
+          <td><div align="left">We had a great time staying at your villa it was lovely. Your villa is in a great location for the parks, outlets &amp; mall and if we manage to get back (usually every 3 years ) we will check to see if it's available. Thanks again for all your help<br>
+          <strong><em>Kerr, UK</em></strong><em></em></div></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>26th December 2012 to 5th January 2013</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>The weather was sunny, hot, cold, clear, cloudy, torrential ....ie all weathers! The kids loved it. We have all come home for a rest. Thank you for letting us use your villa - it was perfect.<br>
+          <strong>Ashworth, UK</strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>19th to 25th December 2012</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>Thank you for having us in your beautiful and lovely villa. It made our otherwise stressful 6 days in the theme parks so much easier and enjoyable. We like the interior as well as the neighbourhood and location. Grocery stores and restaurants are all nearby. The best thing is that it's so close to Disney World. We were able to return to get more clothes on Christmas Eve in order to stay late in the Magic Kingdom to watch the fireworks! Thanks again for having us and we definitely will like to contact you again for a future trip and recommend your villa to our friends<br>
+          <em><strong>Chen, USA</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>10th to 24th November 2012</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>We had a fabulous time and felt really at home in your villa. It is very well equipped with everything we needed and we were very relaxed. It is in a good position on the estate. Weather was great apart from a couple of days when it was overcast. The second day we walked over the bridge and round the lake to the right and we saw an alligator basking in the sun. The birds are amazing and we spent many hours on the deck watching them fly over. Overall the villa was fabulous and I wouldn't hesitate to recommend it to anyone looking for accommodation in that area.<br>
+          <em><strong>Amyes, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>20th October to 4th November 2012</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>Thank you for the use of your lovely home. Location is great and kids loved the pool. Hope to be back<strong><em><br>
+          Macfarlane, UK            </em></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><u><strong>23rd to 29th September 2012</strong></u></div></td>
+        </tr>
+        <tr>
+          <td>The villa was fantastic, no issues at all !! We totally enjoyed our stay and sure you will see us booking again.<br>
+          <em><strong>Patten, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>11th August to 1st September 2012</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>Really enjoyed ourselves with a great villa and pool which we would like to have as a home back in England. Thanks for your emails and keeping in touch. Would definitely recommend to others.<br>
+          <em><strong>Nye, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>4th to 8th August 2012</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>We had a wonderful time on your villa, my kids are already missing it…The rooms were very large and the beds comfortable, the pool was great, the kitchen was clean and equipped with all the necessary dishes.So to summarize it was great and we will definitely recommend your villa to our friends and colleagues.<br>
+          <strong><em>Cohen, USA</em></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>19th July to 2nd August 2012</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>What can I say, wonderful villa, close to everything we could need. Pool was a great hit with all. Clean, fantastic villa. Air con was a relief from the hot weather outside when things were so hot. So sorry we have to leave but aim to be back as soon as we can. Thanks again for all your prompt and helpful emails prior to our holiday.<br>
+          <em><strong>Colley, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>25th June to 16th July 2012</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>Yes we had a great time with the villa. Thank you once again for loaning it to us.We will be in touch if we decided to return to Orlando next summer.<br>
+          <em><strong>Campbells, UK</strong></em><strong></strong></td>
+        </tr>
+        <tr>
+          <td><div align="center"><strong><u>8th to 22nd June 2012</u></strong></div></td>
+        </tr>
+        <tr>
+          <td>Your home made our wonderful holiday in Orlando complete. Our 8th visit here, we would really recommend your villa to others. A real home from home but better. Thanks again.<br>
+          <em><strong>Taylors, UK</strong></em><strong></strong></td>
+      </tr></tbody></table>
+      <p>&nbsp;</p>
+    </div>
+    <p>&nbsp;</p>
+  </div>
+  <div class="sidebar2">
+    <h4>&nbsp;</h4>
+  <!-- end .sidebar2 --></div>
+  <div class="footer">
+    <p class="footer"><img src="C:\Users\shayter\Documents\E2D\footer.png" width="962" height="200" align="absbottom"><!-- end .footer --></p>
+  </div>
+<!-- end .container --></div>
+
+
+</body>
+</html>
